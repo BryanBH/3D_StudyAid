@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@react-three/drei": "^9.11.3",
+    "@zappar/zappar-react-three-fiber": "^1.2.4",
+    "express": "^4.18.1",
+    "styled-components": "^5.3.5",
+    "three": "^0.141.0"
+  }
+}

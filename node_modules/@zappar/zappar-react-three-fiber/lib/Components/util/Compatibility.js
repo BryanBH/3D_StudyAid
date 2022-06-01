@@ -1,0 +1,43 @@
+"use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const ZapparThree = __importStar(require("@zappar/zappar-threejs"));
+const react_1 = require("react");
+/**
+ * Shows a full-page dialog that informs the user they're using an unsupported browser,
+ * and provides a button to 'copy' the current page URL so they can 'paste' it into the
+ * address bar of a compatible alternative.
+ */
+const compatibility = (props) => {
+    const { fallback } = props;
+    const [browserCompatible, setBrowserCompatible] = (0, react_1.useState)(true);
+    (0, react_1.useEffect)(() => {
+        setBrowserCompatible(!ZapparThree.browserIncompatible());
+        // No custom fallback and browser incompatible.
+        if (!browserCompatible && !fallback) {
+            ZapparThree.browserIncompatibleUI();
+        }
+    }, []);
+    if (fallback && !browserCompatible)
+        return fallback;
+    return null;
+};
+exports.default = compatibility;
