@@ -5,17 +5,21 @@ import { Environment, Html, useProgress } from "@react-three/drei";
 
 import Headphones from "../components/headphones/Headphones";
 import TopSection from "../components/topSection/TopSection";
+import Footer from "../components/footer/Footer";
 function Landing() {
 	return (
-		<CanvasContainer>
+		<>
 			<TopSection />
-			<Canvas>
-				<Suspense fallback={<Loader />}>
-					<Headphones />
-					<Environment preset="sunset" background />
-				</Suspense>
-			</Canvas>
-		</CanvasContainer>
+			<CanvasContainer>
+				<Canvas>
+					<Suspense fallback={<Loader />}>
+						<Headphones />
+						<Environment preset="sunset" background />
+					</Suspense>
+				</Canvas>
+			</CanvasContainer>
+			<Footer />
+		</>
 	);
 }
 
@@ -25,6 +29,6 @@ function Loader() {
 }
 const CanvasContainer = styled.div`
 	width: 100%;
-	height: 100%;
+	height: 95%;
 `;
 export default Landing;

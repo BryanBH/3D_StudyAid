@@ -10,10 +10,9 @@ export default function TopSection() {
 
 			<ButtonsConatiner>
 				<SpotifyButton>Login to Spotify</SpotifyButton>
-				<SpotifyButton>
-					{" "}
-					<Link to="/mainPage">Lofi Beats</Link>
-				</SpotifyButton>
+				<Link to="/mainPage">
+					<SpotifyButton>Lofi Beats</SpotifyButton>
+				</Link>
 			</ButtonsConatiner>
 		</TopSectionContainer>
 	);
@@ -22,15 +21,18 @@ export default function TopSection() {
 const TopSectionContainer = styled.div`
 	position: absolute;
 	width: 100%;
-	height: 74.5%;
+	height: 95%;
 	top: 0;
 	left: 0;
 	background-color: #1756dd24;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	padding-top: 13%;
-	z-index: 99;
+	z-index: 20;
+
+	@media screen and (maxWidth: 1700px){
+
+	}
 `;
 const Logo = styled.h1`
 	margin: 0;
@@ -38,6 +40,7 @@ const Logo = styled.h1`
 	font-weight: 700;
 	font-size: 90px;
 	-webkit-text-stroke: 2px black;
+	padding-top: 13%;
 `;
 
 const Slogan = styled.h3`
@@ -66,4 +69,8 @@ const SpotifyButton = styled.button`
 	border-radius: 10px;
 	text-decoration-line: none;
 	color: black;
+	cursor: pointer;
+	&:hover {
+		box-shadow: 2px 2px 2px rgba(35, 35, 35, 0.72);
+	}
 `;
