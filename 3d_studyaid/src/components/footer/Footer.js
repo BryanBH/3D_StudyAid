@@ -29,13 +29,19 @@ const FooterWrapper = styled.footer`
 `;
 
 const NavLink = styled(Link)`
-	display: flex;
-	align-items: center;
-	text-decoration: none;
-	height: 100%;
-	cursor: pointer;
-	font-size: 20px;
+	width: 100px;
+	height: 40px;
+	background-color: whitesmoke;
+	opacity: 0.9;
+	border: 1px solid black;
+	border-radius: 10px;
+	text-decoration-line: none;
 	color: black;
+	cursor: pointer;
+	&:hover {
+		box-shadow: 2px 2px 2px rgba(35, 35, 35, 0.72);
+	}
+	text-align: center;
 `;
 
 const NavMenu = styled.div`

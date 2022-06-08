@@ -6,7 +6,10 @@ import { Environment, Html, useProgress } from "@react-three/drei";
 import Headphones from "../components/headphones/Headphones";
 import TopSection from "../components/topSection/TopSection";
 import Footer from "../components/footer/Footer";
+import Lake from "../images/dry_cracked_lake_4k.hdr"
 function Landing() {
+
+
 	return (
 		<>
 			<TopSection />
@@ -14,11 +17,12 @@ function Landing() {
 				<Canvas>
 					<Suspense fallback={<Loader />}>
 						<Headphones />
-						<Environment preset="sunset" background />
+						{/* <Environment preset="sunset" background /> */}
+						<Environment files={Lake} background />
 					</Suspense>
 				</Canvas>
+				{/* <Footer /> */}
 			</CanvasContainer>
-			<Footer />
 		</>
 	);
 }
@@ -29,6 +33,6 @@ function Loader() {
 }
 const CanvasContainer = styled.div`
 	width: 100%;
-	height: 95%;
+	height: 100%;
 `;
 export default Landing;

@@ -16,7 +16,8 @@ function App() {
 			<Router>
 				<Routes>
 					<Route path="/" element={<Landing />} />
-					<Route path="mainPage" element={<MainPage />} />
+					<Route path="lofiMainPage" element={<MainPage lofi />} />
+					<Route path="spotifyMainPage" element={<MainPage />} />
 					<Route path="about" element={<About />} />
 					<Route path="contactUs" element={<Contact />} />
 					<Route

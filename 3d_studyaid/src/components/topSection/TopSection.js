@@ -2,18 +2,26 @@ import React from "react";
 import styled from "styled-components";
 import { NavLink as Link } from "react-router-dom";
 
+import Footer from "../footer/Footer";
+
 export default function TopSection() {
+	function buttonclick() {
+		console.log("This worked!!");
+	}
 	return (
 		<TopSectionContainer>
 			<Logo>3D Study Aid</Logo>
 			<Slogan>lorem for now </Slogan>
 
 			<ButtonsConatiner>
-				<SpotifyButton>Login to Spotify</SpotifyButton>
-				<Link to="/mainPage">
+				<Link to="/spotifyMainPage" property="lofi">
+					<SpotifyButton>Login to Spotify</SpotifyButton>
+				</Link>
+				<Link to="/lofiMainPage">
 					<SpotifyButton>Lofi Beats</SpotifyButton>
 				</Link>
 			</ButtonsConatiner>
+			<Footer />
 		</TopSectionContainer>
 	);
 }
@@ -21,17 +29,16 @@ export default function TopSection() {
 const TopSectionContainer = styled.div`
 	position: absolute;
 	width: 100%;
-	height: 95%;
+	height: 100%;
 	top: 0;
 	left: 0;
-	background-color: #1756dd24;
+	/* background-color: #1756dd24; */
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	z-index: 20;
 
-	@media screen and (maxWidth: 1700px){
-
+	@media screen and (maxwidth: 1700px) {
 	}
 `;
 const Logo = styled.h1`

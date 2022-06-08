@@ -1,8 +1,10 @@
 import React from 'react'
 
-function MainPage() {
+function MainPage({lofi}) {
   return (
-    <div>MainPage</div>
+    <>
+      {lofi? <h1> Spotify version of home page </h1> : <h1>Lofi version of main page</h1>}
+    </>
   )
 }
 
