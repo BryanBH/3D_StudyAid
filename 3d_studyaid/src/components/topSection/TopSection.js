@@ -1,24 +1,24 @@
 import React from "react";
 import styled from "styled-components";
 import { NavLink as Link } from "react-router-dom";
+import Login from "../spotify/Login";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import Footer from "../footer/Footer";
 
 export default function TopSection() {
-	function buttonclick() {
-		console.log("This worked!!");
-	}
 	return (
 		<TopSectionContainer>
 			<Logo>3D Study Aid</Logo>
 			<Slogan>lorem for now </Slogan>
 
 			<ButtonsConatiner>
-				<Link to="/spotifyMainPage" property="lofi">
-					<SpotifyButton>Login to Spotify</SpotifyButton>
-				</Link>
+				<Login />
+				{/* <Link to="/spotifyMainPage" property="lofi">
+					<Button>Login to Spotify</Button>
+				</Link> */}
 				<Link to="/lofiMainPage">
-					<SpotifyButton>Lofi Beats</SpotifyButton>
+					<Button>Lofi Beats</Button>
 				</Link>
 			</ButtonsConatiner>
 			<Footer />
@@ -67,7 +67,7 @@ const ButtonsConatiner = styled.div`
 	align-items: center;
 `;
 
-const SpotifyButton = styled.button`
+const Button = styled.button`
 	width: 100px;
 	height: 60px;
 	background-color: whitesmoke;

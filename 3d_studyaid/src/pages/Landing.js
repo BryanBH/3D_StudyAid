@@ -5,8 +5,7 @@ import { Environment, Html, useProgress } from "@react-three/drei";
 
 import Headphones from "../components/headphones/Headphones";
 import TopSection from "../components/topSection/TopSection";
-import Footer from "../components/footer/Footer";
-import Lake from "../images/dry_cracked_lake_4k.hdr"
+import hdr from "../images/brown_photostudio_02_4k.hdr"
 function Landing() {
 
 
@@ -17,11 +16,9 @@ function Landing() {
 				<Canvas>
 					<Suspense fallback={<Loader />}>
 						<Headphones />
-						{/* <Environment preset="sunset" background /> */}
-						<Environment files={Lake} background />
+						<Environment files={hdr} background />
 					</Suspense>
 				</Canvas>
-				{/* <Footer /> */}
 			</CanvasContainer>
 		</>
 	);

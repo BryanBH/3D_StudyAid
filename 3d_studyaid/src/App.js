@@ -1,4 +1,3 @@
-import ReactDOM from "react-dom/client";
 import Landing from "./pages/Landing";
 import MainPage from "./pages/MainPage";
 import About from "./pages/About";
@@ -10,14 +9,14 @@ import {
 	Redirect,
 } from "react-router-dom";
 
+const code = new URLSearchParams(window.location.search).get("code");
 function App() {
 	return (
 		<>
 			<Router>
 				<Routes>
-					<Route path="/" element={<Landing />} />
-					<Route path="lofiMainPage" element={<MainPage lofi />} />
-					<Route path="spotifyMainPage" element={<MainPage />} />
+					<Route path="/" element={code ? <MainPage code ={code}/> : <Landing />} />
+					{/* <Route path="MainPage" element={<MainPage />} /> */}
 					<Route path="about" element={<About />} />
 					<Route path="contactUs" element={<Contact />} />
 					<Route

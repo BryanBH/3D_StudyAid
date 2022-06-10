@@ -7,20 +7,12 @@ title: Headphones
 */
 
 import React, { useRef } from "react";
-import { CubeCamera, Environment, OrbitControls, useGLTF } from "@react-three/drei";
-import { useFrame, useLoader } from "@react-three/fiber";
-
-import equirectangular from "../../images/hq-library-hh.jpg";
-import woodTexture from "../../images/wood-floor.jpg"
-import { TextureLoader } from "three";
-import * as THREE from "three";
-import { PerspectiveCamera } from "three";
+import { useGLTF } from "@react-three/drei";
+import { useFrame} from "@react-three/fiber";
 
 export default function Model({ ...props }) {
 	const group = useRef();
 	const { nodes, materials } = useGLTF("/headphones.gltf");
-
-	const [envMap, woodMap] = useLoader(TextureLoader, [equirectangular, woodTexture]);
 
 	useFrame(({ clock }) => {
 		const elapseTime = clock.getElapsedTime();
@@ -28,17 +20,6 @@ export default function Model({ ...props }) {
 	});
 	return (
 		<>
-			{/* <OrbitControls/> */}
-			{/* <group>
-				<mesh
-					rotation={[-Math.PI / 2, 0, 0]}
-					position={[0, -20, -10]}
-					scale={2}>
-					<planeBufferGeometry attach="geometry" args={[100, 100]} />
-					<meshStandardMaterial map={woodMap} />
-				</mesh>
-			</group> */}
-
 			<ambientLight intensity={1} />
 			<group
 				ref={group}
@@ -50,6 +31,7 @@ export default function Model({ ...props }) {
 					<mesh
 						geometry={nodes.Object_2.geometry}
 						material={materials.blinn1SG}
+						
 					/>
 				</group>
 			</group>
