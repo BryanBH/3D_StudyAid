@@ -6,7 +6,6 @@ import {
 	BrowserRouter as Router,
 	Routes,
 	Route,
-	Redirect,
 } from "react-router-dom";
 
 const code = new URLSearchParams(window.location.search).get("code");
@@ -16,7 +15,6 @@ function App() {
 			<Router>
 				<Routes>
 					<Route path="/" element={code ? <MainPage code ={code}/> : <Landing />} />
-					{/* <Route path="MainPage" element={<MainPage />} /> */}
 					<Route path="about" element={<About />} />
 					<Route path="contactUs" element={<Contact />} />
 					<Route

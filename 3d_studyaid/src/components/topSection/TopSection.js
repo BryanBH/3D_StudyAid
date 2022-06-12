@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { NavLink as Link } from "react-router-dom";
+// import { NavLink as Link } from "react-router-dom";
 import Login from "../spotify/Login";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -14,12 +14,6 @@ export default function TopSection() {
 
 			<ButtonsConatiner>
 				<Login />
-				{/* <Link to="/spotifyMainPage" property="lofi">
-					<Button>Login to Spotify</Button>
-				</Link> */}
-				<Link to="/lofiMainPage">
-					<Button>Lofi Beats</Button>
-				</Link>
 			</ButtonsConatiner>
 			<Footer />
 		</TopSectionContainer>
