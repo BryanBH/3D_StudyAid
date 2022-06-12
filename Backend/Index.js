@@ -38,7 +38,7 @@ app.post("/login", (req, res) => {
 		});
 });
 
-//access token refresh endpoint 
+//access token refresh endpoint
 app.post("/refresh", (req, res) => {
 	const refreshToken = req.body.refreshToken;
 	const spotifyApi = new SpotifyWebApi({
@@ -74,7 +74,9 @@ app.post("/getUserInfo", (req, res) => {
 		.getMe()
 		.then((data) => {
 			res.json({
-				userInfo: data.body,
+				display_name: data.body.display_name,
+				email: data.body.email,
+				id: data.body.id,
 			});
 		})
 		.catch((err) => {
@@ -82,19 +84,18 @@ app.post("/getUserInfo", (req, res) => {
 		});
 });
 
-/// user playlist endpoint 
+/// user playlist endpoint
 app.post("/getUserPlaylists", (req, res) => {
 	const accessToken = req.body.accessToken;
-	// console.log(accessToken)
 	const spotifyApi = new SpotifyWebApi({
 		clientId: "f2cd2bcf898f48cab26780d7f808d219",
 		clientSecret: "ae9d29d0ff1f4d2ebec546acb68fd2d8",
 		accessToken,
 	});
 
-	spotifyApi.getUserPlaylists({limit:20}).then((data) => {
+	spotifyApi.getUserPlaylists({ limit: 20 }).then((data) => {
 		res.json({
-			userPlaylists: data.body,
+			userPlaylists: data.body.items,
 		});
 	});
 });

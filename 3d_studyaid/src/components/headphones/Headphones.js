@@ -31,7 +31,6 @@ export default function Model({ ...props }) {
 					<mesh
 						geometry={nodes.Object_2.geometry}
 						material={materials.blinn1SG}
-						
 					/>
 				</group>
 			</group>

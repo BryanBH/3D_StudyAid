@@ -7,7 +7,7 @@ import {
 	Routes,
 	Route,
 } from "react-router-dom";
-
+import "bootstrap/dist/css/bootstrap.min.css";
 const code = new URLSearchParams(window.location.search).get("code");
 function App() {
 	return (

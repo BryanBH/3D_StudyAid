@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
 import SpotifyWebApi from "spotify-web-api-node";
 import axios from "axios";
+import { Container } from "react-bootstrap";
+import PlaylistResult from "../components/spotify/PlaylistResult";
+import Player from "../components/spotify/Player";
+
 
 const spotifyApi = new SpotifyWebApi({
 	clientId: "f2cd2bcf898f48cab26780d7f808d219",
@@ -9,9 +13,14 @@ const spotifyApi = new SpotifyWebApi({
 
 function MainPage({ code }) {
 	const accessToken = useAuth(code);
-	const [userInfo, setUserInfo] = useState({});
-	const [userPlaylists, setUserPlaylists] = useState({});
+	const [userInfo, setUserInfo] = useState();
+	const [userPlaylists, setUserPlaylists] = useState();
+	const [playingPlaylist, setPlayingPlaylist] = useState();
 
+	// callback function used in the PlaylistResults component used to set the current playlist uri 
+	function choosePlaylist(playlist) {
+		setPlayingPlaylist(playlist);
+	}
 
 	useEffect(() => {
 		if (!accessToken) return;
@@ -21,8 +30,8 @@ function MainPage({ code }) {
 				accessToken,
 			})
 			.then((res) => {
-				setUserInfo(res.data.userInfo);
-				console.log(res.data.userInfo);
+				setUserInfo(res.data);
+				console.log(res.data);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -40,11 +49,28 @@ function MainPage({ code }) {
 	}, [accessToken]);
 
 	return (
-		<>
-			<h1>testing</h1>
-			<h1>{userInfo.display_name}</h1>
-			<h2>{userInfo.id}</h2>
-		</>
+		<Container
+			className="d-flex flex-column py-2"
+			style={{ height: "100vh"}}>
+			<h1>{userInfo? userInfo.display_name : ""}</h1>
+			<div className="flex-grow-1 my-2" style={{ overflowY: "auto" }}>
+				{userPlaylists &&
+					userPlaylists.map((playlist) => (
+						<PlaylistResult
+							playlist={playlist}
+							key={playlist.id}
+							choosePlaylist={choosePlaylist}
+						/>
+					))}
+			</div>
+			<div>
+				{" "}
+				<Player
+					accessToken={accessToken}
+					playlistUri={playingPlaylist?.uri}
+				/>
+			</div>
+		</Container>
 	);
 }
 
