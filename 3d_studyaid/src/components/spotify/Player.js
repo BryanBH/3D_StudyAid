@@ -20,6 +20,15 @@ export default function Player({ accessToken, playlistUri }) {
 			callback={(state) => {
 				if (!state.isPlaying) setPlay(false);
 			}}
+			styles={{
+				activeColor: "#fff",
+				bgColor: "#333",
+				color: "#fff",
+				loaderColor: "#fff",
+				sliderColor: "#1cb954",
+				trackArtistColor: "#ccc",
+				trackNameColor: "#fff",
+			}}
 			uris={playlistUri ? [playlistUri] : []}
 		/>
 	);

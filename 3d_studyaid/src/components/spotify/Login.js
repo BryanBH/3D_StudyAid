@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components"
 
 const AUTH_URL =
-	"https://accounts.spotify.com/authorize?client_id=f2cd2bcf898f48cab26780d7f808d219&response_type=code&redirect_uri=http://localhost:3000&scope=streaming%20user-read-email%20user-read-private%20user-library-read%20user-library-modify%20user-read-playback-state%20user-modify-playback-state%20playlist-read-private";
+	"https://accounts.spotify.com/authorize?client_id=f2cd2bcf898f48cab26780d7f808d219&response_type=code&redirect_uri=http://localhost:3000&scope=streaming%20user-read-email%20user-read-private%20user-library-read%20user-library-modify%20user-read-playback-state%20user-modify-playback-state%20playlist-read-private%20user-read-currently-playing%20playlist-read-collaborative";
 
 export default function Login() {
 	return (

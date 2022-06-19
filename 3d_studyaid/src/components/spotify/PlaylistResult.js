@@ -5,19 +5,19 @@ export default function PlaylistResult({ playlist, choosePlaylist }) {
 		choosePlaylist(playlist);
 	}
 	return (
-		<div
-			className="d-flex m-2 align-items-center"
-			style={{ cursor: "pointer" }}
-			onClick={handlePlay}>
-			<img
-				src={playlist.images[0].url}
-				style={{ height: "64px", width: "64px" }}
-				alt="Playlist Cover"
-			/>
-			<div className="ml-3" style={{ border: "1px solid black" }}>
+		<>
+			<div
+				className=" col-sm-1 d-flex m-2 align-items-left flex-column"
+				style={{ cursor: "pointer", background: "rgba(255,255,255,0)" }}
+				onClick={handlePlay}>
+				<img
+					src={playlist.images[0].url}
+					style={{ height: "64px", width: "64px" }}
+					alt="Playlist Cover"
+				/>
 				<div>{playlist.name}</div>
-				<div className="text-muted">{playlist.description}</div>
 			</div>
-		</div>
+			<div className="col-sm-10"></div>
+		</>
 	);
 }

@@ -1,14 +1,12 @@
 import styled from "styled-components";
 import { Canvas } from "@react-three/fiber";
 import { Suspense } from "react";
-import { Environment, Html, useProgress } from "@react-three/drei";
+import { Html, useProgress } from "@react-three/drei";
 
-import Headphones from "../components/headphones/Headphones";
+import Headphones from "../components/models/headphones/Headphones";
 import TopSection from "../components/topSection/TopSection";
-import hdr from "../images/brown_photostudio_02_4k.hdr"
+
 function Landing() {
-
-
 	return (
 		<>
 			<TopSection />
@@ -16,7 +14,6 @@ function Landing() {
 				<Canvas>
 					<Suspense fallback={<Loader />}>
 						<Headphones />
-						<Environment files={hdr} background />
 					</Suspense>
 				</Canvas>
 			</CanvasContainer>

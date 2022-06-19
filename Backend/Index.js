@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const SpotifyWebApi = require("spotify-web-api-node");
@@ -9,7 +10,7 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.listen(5500, () => {
-	console.log("Listening on port 5000");
+	console.log("Listening on port 5500");
 });
 
 /**
@@ -18,9 +19,9 @@ app.listen(5500, () => {
 app.post("/login", (req, res) => {
 	const code = req.body.code;
 	const spotifyApi = new SpotifyWebApi({
-		redirectUri: "http://localhost:3000",
-		clientId: "f2cd2bcf898f48cab26780d7f808d219",
-		clientSecret: "ae9d29d0ff1f4d2ebec546acb68fd2d8",
+		redirectUri: process.env.REDIRECT_URI,
+		clientId: process.env.CLIENT_ID,
+		clientSecret: process.env.CLIENT_SECRET,
 	});
 
 	spotifyApi
@@ -42,9 +43,9 @@ app.post("/login", (req, res) => {
 app.post("/refresh", (req, res) => {
 	const refreshToken = req.body.refreshToken;
 	const spotifyApi = new SpotifyWebApi({
-		redirectUri: "http://localhost:3000",
-		clientId: "f2cd2bcf898f48cab26780d7f808d219",
-		clientSecret: "ae9d29d0ff1f4d2ebec546acb68fd2d8",
+		redirectUri: process.env.REDIRECT_URI,
+		clientId: process.env.CLIENT_ID,
+		clientSecret: process.env.CLIENT_SECRET,
 		refreshToken,
 	});
 
@@ -53,7 +54,7 @@ app.post("/refresh", (req, res) => {
 		.then((data) => {
 			res.json({
 				accessToken: data.body.access_token,
-				expiresIn: data.body.expiresIn,
+				expiresIn: data.body.expires_in,
 			});
 		})
 		.catch((err) => {
@@ -65,8 +66,8 @@ app.post("/refresh", (req, res) => {
 app.post("/getUserInfo", (req, res) => {
 	const accessToken = req.body.accessToken;
 	const spotifyApi = new SpotifyWebApi({
-		clientId: "f2cd2bcf898f48cab26780d7f808d219",
-		clientSecret: "ae9d29d0ff1f4d2ebec546acb68fd2d8",
+		clientId: process.env.CLIENT_ID,
+		clientSecret: process.env.CLIENT_SECRET,
 		accessToken,
 	});
 
@@ -77,10 +78,15 @@ app.post("/getUserInfo", (req, res) => {
 				display_name: data.body.display_name,
 				email: data.body.email,
 				id: data.body.id,
+				statusCode: 200,
 			});
 		})
 		.catch((err) => {
-			console.log(err);
+			// if (err.statusCode == 403) {
+			// 	res.json({
+			// 		statusCode: 403,
+			// 	});
+			// }
 		});
 });
 
@@ -88,14 +94,22 @@ app.post("/getUserInfo", (req, res) => {
 app.post("/getUserPlaylists", (req, res) => {
 	const accessToken = req.body.accessToken;
 	const spotifyApi = new SpotifyWebApi({
-		clientId: "f2cd2bcf898f48cab26780d7f808d219",
-		clientSecret: "ae9d29d0ff1f4d2ebec546acb68fd2d8",
+		clientId: process.env.CLIENT_ID,
+		clientSecret: process.env.CLIENT_SECRET,
 		accessToken,
 	});
 
-	spotifyApi.getUserPlaylists({ limit: 20 }).then((data) => {
-		res.json({
-			userPlaylists: data.body.items,
+	spotifyApi
+		.getUserPlaylists({ limit: 20 })
+		.then((data) => {
+			res.json({
+				userPlaylists: data.body.items,
+				statusCode: 200,
+			});
+		})
+		.catch((err) => {
+			// res.json({
+			// 	statusCode: 403
+			// })
 		});
-	});
 });
