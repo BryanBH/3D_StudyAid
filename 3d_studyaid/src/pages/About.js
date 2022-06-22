@@ -1,8 +1,10 @@
 import React from 'react'
-
+import ModelRendering from '../components/models/ModelRendering'
 function About() {
   return (
-    <div>About</div>
+    <>
+      <ModelRendering modelValue={"4"}/>
+    </>
   )
 }
 

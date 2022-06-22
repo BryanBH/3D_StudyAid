@@ -16,6 +16,7 @@ export default function Player({ accessToken, playlistUri }) {
 		<SpotifyPlayer
 			token={accessToken}
 			showSaveIcon
+			magnifySliderOnHover
 			play={play}
 			callback={(state) => {
 				if (!state.isPlaying) setPlay(false);
