@@ -21,7 +21,7 @@ export default function Model({ ...props }) {
 
 	useFrame(({ clock }) => {
 		const elapseTime = clock.getElapsedTime();
-		group.current.rotation.y = elapseTime / 10;
+		group.current.rotation.y = elapseTime / 16;
 	});
 	return (
 		<>

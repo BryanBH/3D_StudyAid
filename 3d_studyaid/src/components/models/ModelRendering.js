@@ -9,9 +9,9 @@ import Robot from "./robot/Robot"
 
 const modelIdicies = {
 	1: <Headphones />,
-	2: <Astronaut />,
-	3: <MedievalBook />,
-	4: <Robot/>,
+	2: <MedievalBook />,
+	3: <Astronaut />,
+	4: <Robot />,
 };
 
 function chooseModel(modelValue) {
@@ -25,7 +25,7 @@ export default function ModelRendering({ modelValue }) {
 				<OrbitControls />
 				<color
 					attach="background"
-					args={modelValue === "2" ? ["black"] : ["#ADD8E6"]}
+					args={modelValue === "3" ? ["black"] : ["#ADD8E6"]}
 				/>
 				<Suspense fallback={<Loader />}>
 					{modelValue ? chooseModel(modelValue) : null}

@@ -67,21 +67,6 @@ const ButtonsConatiner = styled.div`
 	justify-content: space-evenly;
 	align-items: center;
 `;
-
-const Button = styled.button`
-	width: 100px;
-	height: 60px;
-	background-color: whitesmoke;
-	opacity: 0.9;
-	border: 1px solid black;
-	border-radius: 10px;
-	text-decoration-line: none;
-	color: black;
-	cursor: pointer;
-	&:hover {
-		box-shadow: 2px 2px 2px rgba(35, 35, 35, 0.72);
-	}
-`;
 const FooterWrapper = styled.footer`
 	width: 100%;
 	height: 5%;

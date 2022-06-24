@@ -7,8 +7,8 @@ export default function PlaylistResult({ playlist, choosePlaylist }) {
 	return (
 		<>
 			<div
-				className=" col-sm-1 d-flex m-2 align-items-left flex-column"
-				style={{ cursor: "pointer", background: "rgba(255,255,255,0)"}}
+				className="d-flex m-2 align-items-center flex-column text-center"
+				style={{ cursor: "pointer", overflowY: "auto" }}
 				onClick={handlePlay}>
 				<img
 					src={playlist.images[0].url}
@@ -17,7 +17,6 @@ export default function PlaylistResult({ playlist, choosePlaylist }) {
 				/>
 				<div>{playlist.name}</div>
 			</div>
-			{/* <div className="col-sm-10"></div> */}
 		</>
 	);
 }

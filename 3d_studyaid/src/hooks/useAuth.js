@@ -22,6 +22,7 @@ export default function useAuth(code) {
 			});
 	}, [code]);
 
+	// refresh token update 
 	useEffect(() => {
 		if (!refreshToken || !expiresIn) return;
 		const interval = setInterval(() => {

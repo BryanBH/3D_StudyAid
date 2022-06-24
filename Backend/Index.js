@@ -4,6 +4,19 @@ const app = express();
 const SpotifyWebApi = require("spotify-web-api-node");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+// const path = require("path");
+// const http = require("http");
+// const socketio = require("socket.io");
+// const formatMessage = require("./Utility/messages");
+// const {
+// 	userJoin,
+// 	getCurrentUser,
+// 	userLeaves,
+// 	getRoomUsers,
+// } = require("./Utility/user");
+// const server = http.createServer(app);
+// const io = socketio(server);
+// const botName = "Admin";
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -82,11 +95,7 @@ app.post("/getUserInfo", (req, res) => {
 			});
 		})
 		.catch((err) => {
-			// if (err.statusCode == 403) {
-			// 	res.json({
-			// 		statusCode: 403,
-			// 	});
-			// }
+			console.log(err)
 		});
 });
 
@@ -108,8 +117,40 @@ app.post("/getUserPlaylists", (req, res) => {
 			});
 		})
 		.catch((err) => {
-			// res.json({
-			// 	statusCode: 403
-			// })
+			console.log(err);
+		});
+});
+
+app.post("/getLofiPlaylists", (req, res) => {
+	const accessToken = req.body.accessToken;
+	const spotifyApi = new SpotifyWebApi({
+		clientId: process.env.CLIENT_ID,
+		clientSecret: process.env.CLIENT_SECRET,
+		accessToken,
+	});
+
+	spotifyApi
+		.searchPlaylists("lofi", { limit: 50 })
+		.then((data) => {
+			const playlists = data.body.playlists.items;
+			const randomPlaylist = [];
+
+			for (let i = 0; i < 6; i++) {
+				const ele =
+					playlists[Math.floor(Math.random() * playlists.length)];
+				if (randomPlaylist[i - 1] !== ele) {
+					randomPlaylist.push(ele);
+				} else {
+					i--;
+				}
+			}
+
+			res.json({
+				playlists: randomPlaylist,
+				statusCode: 200,
+			});
+		})
+		.catch((err) => {
+			console.log(err);
 		});
 });
