@@ -4,19 +4,6 @@ const app = express();
 const SpotifyWebApi = require("spotify-web-api-node");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-// const path = require("path");
-// const http = require("http");
-// const socketio = require("socket.io");
-// const formatMessage = require("./Utility/messages");
-// const {
-// 	userJoin,
-// 	getCurrentUser,
-// 	userLeaves,
-// 	getRoomUsers,
-// } = require("./Utility/user");
-// const server = http.createServer(app);
-// const io = socketio(server);
-// const botName = "Admin";
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -95,7 +82,7 @@ app.post("/getUserInfo", (req, res) => {
 			});
 		})
 		.catch((err) => {
-			console.log(err)
+			console.log(err);
 		});
 });
 
@@ -149,6 +136,61 @@ app.post("/getLofiPlaylists", (req, res) => {
 				playlists: randomPlaylist,
 				statusCode: 200,
 			});
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+});
+
+/**
+ * Create playlist endpoint. first searches tracks based on artist or genre,
+ *  then creates the playlist and populates it
+ */
+app.post("/createPlaylist", async (req, res) => {
+	const accessToken = req.body.accessToken;
+	const { name, description, genre, isPublic } = req.body.params;
+	const spotifyApi = new SpotifyWebApi({
+		clientId: process.env.CLIENT_ID,
+		clientSecret: process.env.CLIENT_SECRET,
+		accessToken,
+	});
+
+	const genres = genre.split(",");
+	const playlist = [];
+	const num = 10;
+	if (genres.length > 3) {
+		num = 7;
+	}
+
+	// look through genres/artists, search for tracks and get their uris
+	for (g of genres) {
+		await spotifyApi
+			.searchTracks(`${g}`, { limit: `${num}` })
+			.then((data) => {
+				let trackItems = data.body.tracks.items;
+				for (let i = 0; i < trackItems.length; i++) {
+					playlist.push(trackItems[i].uri);
+				}
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}
+
+	// O(n) in space array shuffle
+	for (let i = playlist.length - 1; i > 0; i--) {
+		let j = Math.floor(Math.random() * (i + 1));
+		[playlist[i], playlist[j]] = [playlist[j], playlist[i]];
+	}
+
+	spotifyApi
+		.createPlaylist(name, { description: description, public: isPublic })
+		.then((data) => {
+			const playlistId = data.body.id;
+			return playlistId;
+		})
+		.then((playlistId) => {
+			return spotifyApi.addTracksToPlaylist(playlistId, playlist);
 		})
 		.catch((err) => {
 			console.log(err);

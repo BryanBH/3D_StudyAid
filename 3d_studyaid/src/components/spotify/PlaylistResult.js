@@ -1,4 +1,6 @@
 import React from "react";
+const imgTest =
+	"https://i.scdn.co/image/ab67616d0000b27349d694203245f241a1bcaa72";
 
 export default function PlaylistResult({ playlist, choosePlaylist }) {
 	function handlePlay() {
@@ -11,7 +13,7 @@ export default function PlaylistResult({ playlist, choosePlaylist }) {
 				style={{ cursor: "pointer", overflowY: "auto" }}
 				onClick={handlePlay}>
 				<img
-					src={playlist.images[0].url}
+					src={playlist.images[0]?playlist.images[0].url: imgTest}
 					style={{ height: "94px", width: "94px" }}
 					alt="Playlist Cover"
 				/>

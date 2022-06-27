@@ -25,6 +25,7 @@ export default function Model({ ...props }) {
 	});
 	return (
 		<>
+			<ambientLight intensity={0.9} />
 			<group
 				ref={group}
 				{...props}
