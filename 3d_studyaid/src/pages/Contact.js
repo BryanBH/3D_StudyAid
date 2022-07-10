@@ -1,8 +1,11 @@
 import React from 'react'
+import useAuth from '../hooks/useAuth'
 
-function Contact() {
+function Contact({ code }) {
+  
+  const accessToken = useAuth(code);
   return (
-    <div>Contact</div>
+    <h1>{accessToken}</h1>
   )
 }
 

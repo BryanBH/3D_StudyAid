@@ -1,17 +1,95 @@
 require("dotenv").config();
 const express = require("express");
-const app = express();
 const SpotifyWebApi = require("spotify-web-api-node");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
+//Socket.io stuff
+const http = require("http");
+const formatMessage = require("./Utility/messages");
+const {
+	userJoin,
+	getCurrentUser,
+	userLeaves,
+	getRoomUsers,
+} = require("./Utility/user");
+const { Server } = require("socket.io");
+const botName = "Admin";
+
+const app = express();
+const server = http.createServer(app);
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.listen(5500, () => {
+server.listen(5500, () => {
 	console.log("Listening on port 5500");
 });
+
+const io = new Server(server, {
+	cors: {
+		origin: "http://localhost:3000",
+		methods: ["GET", "POST"],
+	},
+});
+
+//Run when client connects
+io.on("connection", (socket) => {
+	console.log(`User Connected: ${socket.id}`);
+	socket.on("joinRoom", ({ username, room }) => {
+		const user = userJoin(socket.id, username, room);
+		console.log(`User Connected: ${user.username} Joined ${user.room}`);
+
+		socket.join(user.room);
+		//Welcome client
+		socket.emit("message", formatMessage(botName, "Welcome to Channel"));
+
+		//Broadcast when user connects
+		socket.broadcast
+			.to(user.room)
+			.emit(
+				"message",
+				formatMessage(
+					botName,
+					`${user.username} has joined the channel`
+				)
+			);
+
+		//Sends Users and Room Info
+		io.to(user.room).emit("roomUsers", {
+			room: user.room,
+			users: getRoomUsers(user.room),
+		});
+	});
+
+	//Listen for messages
+	socket.on("chatMessage", (msg) => {
+		const user = getCurrentUser(socket.id);
+		io.to(user.room).emit("message", formatMessage(user.username, msg));
+		// console.log(msg)
+		//console.log(`User: ${user.username} sent ${formatMessage(user.username, msg)}`);
+	});
+
+	//runs when user disconnect
+	socket.on("disconnect", () => {
+		const user = userLeaves(socket.id);
+
+		if (user) {
+			io.to(user.room).emit(
+				"message",
+				formatMessage(botName, `${user.username} has left channel`)
+			);
+
+			//Sends Users and Room Info
+			io.to(user.room).emit("roomUsers", {
+				room: user.room,
+				users: getRoomUsers(user.room),
+			});
+		}
+	});
+});
+
+
 
 /**
  * Spotify login auth route

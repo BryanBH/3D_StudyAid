@@ -6,31 +6,22 @@ import MainPage from "./pages/MainPage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
+import SpotifyResults from "./components/spotify/SpotifyResults";
 const code = new URLSearchParams(window.location.search).get("code");
 function App() {
 	const [accessToken, setAccessToken] = useState();
-	
+
 	return (
 		<>
 			<Router>
 				<Routes>
+					<Route path="/" element={<Landing />} />
+					<Route path="/mainPage" element={<MainPage code={code} setAccessToken={setAccessToken} />} />
+					<Route path="/results" element={<SpotifyResults/>}/>
+					<Route path="/about" element={<About />} />
+					<Route path="/contactUs" element={<Contact />} />
 					<Route
-						path="/"
-						element={
-							code ? (
-								<MainPage
-									code={code}
-									setAccessToken={setAccessToken}
-								/>
-							) : (
-								<Landing />
-							)
-						}
-					/>
-					<Route path="about" element={<About />} />
-					<Route path="contactUs" element={<Contact />} />
-					<Route
-						path="newPLaylist"
+						path="/newPLaylist"
 						element={<NewPlaylist accessToken={accessToken} />}
 					/>
 					<Route

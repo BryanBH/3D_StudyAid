@@ -1,9 +1,11 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Container, Form, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-export default function NewPlaylist({ code, accessToken }) {
+import { useNavigate, useLocation } from "react-router-dom";
+export default function NewPlaylist() {
 	const navigate = useNavigate();
+	const location = useLocation();
+	const accessToken = location.state.accessToken;
 	const [name, setName] = useState("");
 	const [description, setDescription] = useState("");
 	const [genre, setGenre] = useState("");
@@ -24,13 +26,12 @@ export default function NewPlaylist({ code, accessToken }) {
 				console.log(err);
 			});
 	}
-
 	function handleSubmit(event) {
 		event.preventDefault();
 		createPlaylist();
-		// event.target.reset();
+		event.target.reset();
 
-		// navigate("/");
+		navigate("/results", { state: { accessToken: accessToken } });
 	}
 
 	return (
@@ -96,7 +97,7 @@ export default function NewPlaylist({ code, accessToken }) {
 							controlId="formBasicCheckBox">
 							<Form.Check
 								type="checkbox"
-								label="Check for public playlist"
+								label="Check for private playlist"
 								onChange={() => setIsPublic(!isPublic)}
 							/>
 						</Form.Group>
