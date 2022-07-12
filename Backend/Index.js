@@ -235,9 +235,20 @@ app.post("/createPlaylist", async (req, res) => {
 
 	const genres = genre.split(",");
 	const playlist = [];
-	const num = 10;
-	if (genres.length > 3) {
-		num = 7;
+	
+	switch (genres.length) {
+		case 1:
+			num = 20;
+			break;
+		case 2:
+			num = 10;
+			break;
+		case 3:
+			num = 7;
+			break;
+		default:
+			num = 5;
+			break;
 	}
 
 	// look through genres/artists, search for tracks and get their uris
