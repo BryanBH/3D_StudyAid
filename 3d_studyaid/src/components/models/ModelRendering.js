@@ -1,48 +1,33 @@
 import React, { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import Headphones from "./headphones/Headphones";
-import Astronaut from "./astronaut/AnimatedAstronaut";
-import { Html, useProgress, OrbitControls } from "@react-three/drei";
+import Astronaut from "./astronaut";
 import styled from "styled-components";
-import MedievalBook from "./medievalBook/Medieval_book";
-import Robot from "./robot/Robot"
+import MedievalBook from "./medievalBook";
+import Robot from "./robot";
+import RP from "./RP";
+import Mixamo from "./mixamo";
 
-const modelIdicies = {
-	1: <Headphones />,
-	2: <MedievalBook />,
-	3: <Astronaut />,
-	4: <Robot />,
-};
+const modelIndicies = [
+	{ model: <MedievalBook /> },
+	{ model: <Astronaut /> },
+	// { model: <Mixamo /> },
+	{ model: <Robot /> },
+	{ model: <RP /> },
+];
 
 function chooseModel(modelValue) {
-	const model = modelIdicies[modelValue];
+	const model = modelIndicies[modelValue].model;
+
 	return model;
 }
 export default function ModelRendering({ modelValue }) {
 	return (
 		<CanvasContainer>
-			<Canvas>
-				<OrbitControls />
-				<color
-					attach="background"
-					args={modelValue === "3" ? ["black"] : ["#ADD8E6"]}
-				/>
-				<Suspense fallback={<Loader />}>
-					{modelValue ? chooseModel(modelValue) : null}
-				</Suspense>
-			</Canvas>
+			{modelValue ? chooseModel(modelValue) : null}
 		</CanvasContainer>
 	);
 }
 
-function Loader() {
-	const { progress } = useProgress();
-	return (
-		<Html center style={{ color: "white" }}>
-			{progress} % loaded
-		</Html>
-	);
-}
 const CanvasContainer = styled.div`
 	position: absolute;
 	top: 0;

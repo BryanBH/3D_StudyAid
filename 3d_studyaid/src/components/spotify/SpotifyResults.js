@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import useAuth from "../../hooks/useAuth";
+// import useAuth from "../../hooks/useAuth";
 import axios from "axios";
 import { Container, Form, Button } from "react-bootstrap";
 import PlaylistResult from "./PlaylistResult";
 import Player from "./Player";
 import styled from "styled-components";
-import { Link, useLocation, useNavigate} from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import ModelRendering from "../models/ModelRendering";
 import { Room } from "../chatApp/Room";
 
@@ -14,11 +14,11 @@ export default function SpotifyResults() {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const accessToken = location.state.accessToken;
-	
+
 	const [userInfo, setUserInfo] = useState();
 	const [userPlaylists, setUserPlaylists] = useState([]);
 	const [playingPlaylist, setPlayingPlaylist] = useState([]);
-	const [modelValue, setModelValue] = useState("1");
+	const [modelValue, setModelValue] = useState("0");
 	const [lofiPlaylists, setLofiPlaylists] = useState([]);
 	const [loadLofiButton, setLoadLofiButton] = useState(true);
 	const [loadLofi, setLoadLofi] = useState(false);
@@ -122,10 +122,11 @@ export default function SpotifyResults() {
 								onChange={(event) =>
 									setModelValue(event.target.value)
 								}>
-								<option value={"1"}>Headphones</option>
-								<option value={"2"}>Medieval Book</option>
-								<option value={"3"}>Astronaut</option>
-								<option value={"4"}>Robot</option>
+								<option value={"0"}>Medieval Book</option>
+								<option value={"1"}>Astronaut</option>
+								{/* <option valaue={"2"}>Mixmo</option> */}
+								<option value={"2"}>Iron Giant</option>
+								<option value={"3"}>Mini Robot</option>
 							</Form.Select>
 						</Form>
 						<div className="my-2 d-flex justify-content-around">
@@ -142,9 +143,11 @@ export default function SpotifyResults() {
 									color: "black",
 									cursor: "pointer",
 								}}
-							onClick={() =>{navigate("/newPlaylist", {
-								state: { accessToken: accessToken },
-							});}}>
+								onClick={() => {
+									navigate("/newPlaylist", {
+										state: { accessToken: accessToken },
+									});
+								}}>
 								Create Playlist
 							</Button>
 							{loadLofiButton ? (

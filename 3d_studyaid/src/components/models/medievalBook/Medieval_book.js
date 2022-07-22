@@ -7,7 +7,7 @@ title: Medieval Fantasy Book
 */
 
 import React, { useEffect, useRef } from "react";
-import { useGLTF, useAnimations, OrbitControls } from "@react-three/drei";
+import { useGLTF, useAnimations } from "@react-three/drei";
 
 export default function Model({ ...props }) {
 	const group = useRef();
