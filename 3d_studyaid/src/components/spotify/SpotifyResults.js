@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import useAuth from "../../hooks/useAuth";
 import axios from "axios";
 import { Container, Form, Button } from "react-bootstrap";
 import PlaylistResult from "./PlaylistResult";
@@ -8,42 +7,36 @@ import styled from "styled-components";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import ModelRendering from "../models/ModelRendering";
 import { Room } from "../chatApp/Room";
+import Popout from "react-popout";
 
+import useUserInfo from "../../hooks/useUserInfo";
+import useLofiPlaylists from "../../hooks/useLofiPlaylists";
 export default function SpotifyResults() {
 	// const accessToken = useAuth(code);
 	const navigate = useNavigate();
 	const location = useLocation();
 	const accessToken = location.state.accessToken;
-
-	const [userInfo, setUserInfo] = useState();
 	const [userPlaylists, setUserPlaylists] = useState([]);
 	const [playingPlaylist, setPlayingPlaylist] = useState([]);
 	const [modelValue, setModelValue] = useState("0");
-	const [lofiPlaylists, setLofiPlaylists] = useState([]);
 	const [loadLofiButton, setLoadLofiButton] = useState(true);
 	const [loadLofi, setLoadLofi] = useState(false);
-	const [isRoom, setIsRoom] = useState(false);
+	const [isPopoutActive, setIsPopoutActive] = useState(false);
 
 	// callback function used in the PlaylistResults component used to set the current playlist uri
 	function choosePlaylist(playlist) {
 		setPlayingPlaylist(playlist);
 	}
 
+	function closepopout() {
+		setIsPopoutActive(false);
+	}
+
+	const userInfo = useUserInfo(accessToken);
+	const lofiPlaylists = useLofiPlaylists(accessToken);
 	// API calls
 	useEffect(() => {
 		if (!accessToken) return;
-		axios
-			.post("http://localhost:5500/getUserInfo", {
-				accessToken,
-			})
-			.then((res) => {
-				setUserInfo(res.data);
-				// console.log(res.data);
-			})
-			.catch((err) => {
-				// console.log(err);
-			});
-
 		axios
 			.post("http://localhost:5500/getUserPlaylists", {
 				accessToken,
@@ -56,20 +49,6 @@ export default function SpotifyResults() {
 				// console.log(res.data.userPlaylists);
 			})
 			.catch((err) => console.log(err));
-
-		axios
-			.post("http://localhost:5500/getLofiPlaylists", {
-				accessToken,
-			})
-			.then((res) => {
-				setLofiPlaylists(res.data.playlists);
-				// console.log(res.data.playlists);
-			});
-
-		return () => {
-			setUserPlaylists([]);
-			setLofiPlaylists([]);
-		};
 	}, [accessToken]);
 
 	return (
@@ -192,29 +171,32 @@ export default function SpotifyResults() {
 					</div>
 					<div className="col-sm-6 my-2"></div>
 					<div className="col-sm-2 my-4 d-flex justify-content-center">
-						<Form>
-							{!isRoom ? (
-								<Button
-									style={{
-										width: "100px",
-										height: "60px",
-										backgroundColor: "whitesmoke",
-										opacity: "0.9",
-										border: "1px solid black",
-										borderRadius: "10px",
-										textDecorationLine: "none",
-										color: "black",
-										cursor: "pointer",
-									}}
-									onClick={() => {
-										setIsRoom(true);
-									}}>
-									Create/Join Room
-								</Button>
-							) : (
-								<Room />
-							)}
-						</Form>
+						{isPopoutActive ? (
+							<Popout
+								title="Chatroom"
+								onClosing={closepopout}
+								options={{ width: "500px", height: "600px" }}>
+								<Room closepopout={closepopout} />
+							</Popout>
+						) : (
+							<Button
+								style={{
+									width: "100px",
+									height: "60px",
+									backgroundColor: "whitesmoke",
+									opacity: "0.9",
+									border: "1px solid black",
+									borderRadius: "10px",
+									textDecorationLine: "none",
+									color: "black",
+									cursor: "pointer",
+								}}
+								onClick={() => {
+									setIsPopoutActive(true);
+								}}>
+								Create/Join Room
+							</Button>
+						)}
 					</div>
 				</div>
 				<div>
