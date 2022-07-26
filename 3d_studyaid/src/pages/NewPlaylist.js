@@ -9,6 +9,7 @@ export default function NewPlaylist() {
 	const [name, setName] = useState("");
 	const [description, setDescription] = useState("");
 	const [genre, setGenre] = useState("");
+	const [artist, setArtist] = useState("");
 	const [isPublic, setIsPublic] = useState(false);
 
 	async function createPlaylist() {
@@ -19,6 +20,7 @@ export default function NewPlaylist() {
 					name,
 					description,
 					genre,
+					artist, 
 					isPublic,
 				},
 			})
@@ -83,17 +85,26 @@ export default function NewPlaylist() {
 						</Form.Group>
 
 						<Form.Group className="mb-3" controlId="formBasicText">
-							<Form.Label>Playlist Genere</Form.Label>
+							<Form.Label>Purpose</Form.Label>
 							<Form.Control
 								type="text"
-								placeholder="Enter Playlist Generes/Artists spereated by commas"
+								placeholder="Enter Playlist purpose spereated by commas"
 								onChange={(evt) => setGenre(evt.target.value)}
 								required
 							/>
 						</Form.Group>
 
+						<Form.Group className="mb-3" controlId="formBasicText">
+							<Form.Label>Artists</Form.Label>
+							<Form.Control
+								type="text"
+								placeholder="Enter Genre/Artists spereated by commas"
+								onChange={(evt) => setArtist(evt.target.value)}
+							/>
+						</Form.Group>
+
 						<Form.Group
-							className="mb-3"
+							className="mb-3 "
 							controlId="formBasicCheckBox">
 							<Form.Check
 								type="checkbox"
@@ -101,7 +112,11 @@ export default function NewPlaylist() {
 								onChange={() => setIsPublic(!isPublic)}
 							/>
 						</Form.Group>
-						<Button type="submit">Submit</Button>
+						<Button
+							className=" ml-3 d-flex justify-content-center align-items-center"
+							type="submit">
+							Submit
+						</Button>
 					</Form>
 				</div>
 			</Container>

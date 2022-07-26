@@ -89,8 +89,6 @@ io.on("connection", (socket) => {
 	});
 });
 
-
-
 /**
  * Spotify login auth route
  */
@@ -226,7 +224,7 @@ app.post("/getLofiPlaylists", (req, res) => {
  */
 app.post("/createPlaylist", async (req, res) => {
 	const accessToken = req.body.accessToken;
-	const { name, description, genre, isPublic } = req.body.params;
+	const { name, description, genre, artist, isPublic } = req.body.params;
 	const spotifyApi = new SpotifyWebApi({
 		clientId: process.env.CLIENT_ID,
 		clientSecret: process.env.CLIENT_SECRET,
@@ -234,8 +232,10 @@ app.post("/createPlaylist", async (req, res) => {
 	});
 
 	const genres = genre.split(",");
+	const artists = artist.split(",");
+	const query = [...genres, ...artists];
 	const playlist = [];
-	
+
 	switch (genres.length) {
 		case 1:
 			num = 20;
@@ -252,9 +252,9 @@ app.post("/createPlaylist", async (req, res) => {
 	}
 
 	// look through genres/artists, search for tracks and get their uris
-	for (g of genres) {
+	for (q of query) {
 		await spotifyApi
-			.searchTracks(`${g}`, { limit: `${num}` })
+			.searchTracks(`${q}`, { limit: `${num}` })
 			.then((data) => {
 				let trackItems = data.body.tracks.items;
 				for (let i = 0; i < trackItems.length; i++) {

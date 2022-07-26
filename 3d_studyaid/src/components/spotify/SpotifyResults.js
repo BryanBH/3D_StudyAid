@@ -175,7 +175,7 @@ export default function SpotifyResults() {
 							<Popout
 								title="Chatroom"
 								onClosing={closepopout}
-								options={{ width: "500px", height: "600px" }}>
+								options={{ width: "500px", height: "500px" }}>
 								<Room closepopout={closepopout} />
 							</Popout>
 						) : (
