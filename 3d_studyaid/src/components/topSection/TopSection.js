@@ -8,19 +8,25 @@ export default function TopSection() {
 	return (
 		<TopSectionContainer>
 			<Logo>3D Study Aid</Logo>
-			<Slogan>lorem for now </Slogan>
-
-			<ButtonsConatiner>
+			<br>
+			</br>
+			<br>
+			</br>
+			<br>
+			</br>
+			{/* <ButtonsConatiner>
 				<Login />
-			</ButtonsConatiner>
+			</ButtonsConatiner> */}
 			<FooterWrapper>
 				<NavMenu>
 					<NavLink to="about" activestyle="true">
 						About Us
 					</NavLink>
+					<Login />
 					<NavLink to="contactUs" activestyle="true">
 						Contact Us
 					</NavLink>
+					
 				</NavMenu>
 			</FooterWrapper>
 		</TopSectionContainer>

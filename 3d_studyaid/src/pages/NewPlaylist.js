@@ -85,7 +85,7 @@ export default function NewPlaylist() {
 						</Form.Group>
 
 						<Form.Group className="mb-3" controlId="formBasicText">
-							<Form.Label>Purpose</Form.Label>
+							<Form.Label>Keywords</Form.Label>
 							<Form.Control
 								type="text"
 								placeholder="Enter Playlist purpose spereated by commas"
@@ -95,7 +95,7 @@ export default function NewPlaylist() {
 						</Form.Group>
 
 						<Form.Group className="mb-3" controlId="formBasicText">
-							<Form.Label>Artists</Form.Label>
+							<Form.Label>Artists/Genre</Form.Label>
 							<Form.Control
 								type="text"
 								placeholder="Enter Genre/Artists spereated by commas"
